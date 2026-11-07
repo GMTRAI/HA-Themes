@@ -1,0 +1,988 @@
+# TEMPLATE: replace every domain.replace_me_* with an existing entity ID, or remove its card.
+# Room names are editable examples, not a detected floor plan. No device IDs are used.
+title: Drift Home · Mobile
+views:
+- title: Home
+  path: home
+  type: sections
+  max_columns: 1
+  dense_section_placement: false
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Favorites
+      heading_style: title
+    - type: tile
+      entity: light.replace_me_kitchen
+      name: Kitchen
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:countertop-outline
+      features:
+      - type: light-brightness
+    - type: tile
+      entity: light.replace_me_living
+      name: Living room
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:sofa-outline
+      features:
+      - type: light-brightness
+    - type: tile
+      entity: climate.replace_me_home
+      name: Home climate
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: grid
+      columns: 3
+      square: false
+      cards:
+      - type: button
+        name: Morning
+        icon: mdi:weather-sunny
+        tap_action:
+          action: perform-action
+          perform_action: scene.turn_on
+          target:
+            entity_id: scene.replace_me_morning
+          confirmation:
+            text: Activate Morning?
+        hold_action:
+          action: none
+      - type: button
+        name: Evening
+        icon: mdi:weather-sunset
+        tap_action:
+          action: perform-action
+          perform_action: scene.turn_on
+          target:
+            entity_id: scene.replace_me_evening
+          confirmation:
+            text: Activate Evening?
+        hold_action:
+          action: none
+      - type: button
+        name: Good night
+        icon: mdi:moon-waning-crescent
+        tap_action:
+          action: perform-action
+          perform_action: scene.turn_on
+          target:
+            entity_id: scene.replace_me_goodnight
+          confirmation:
+            text: Activate Good night?
+        hold_action:
+          action: none
+  - type: grid
+    cards:
+    - type: heading
+      heading: At home
+      heading_style: title
+    - type: markdown
+      content: '# {{ "Good morning" if now().hour < 12 else "Good afternoon" if now().hour < 18 else "Good evening"
+        }}
+
+        {{ now().strftime("%A, %B %d") }} · Drift Home'
+    - &id001
+      type: grid
+      columns: 3
+      square: false
+      cards:
+      - type: button
+        name: Upstairs
+        icon: mdi:home-floor-1
+        show_state: false
+        tap_action:
+          action: navigate
+          navigation_path: /drift-mobile/upstairs
+        hold_action:
+          action: none
+      - type: button
+        name: Main
+        icon: mdi:home-floor-0
+        show_state: false
+        tap_action:
+          action: navigate
+          navigation_path: /drift-mobile/main
+        hold_action:
+          action: none
+      - type: button
+        name: Basement
+        icon: mdi:home-floor-b
+        show_state: false
+        tap_action:
+          action: navigate
+          navigation_path: /drift-mobile/basement
+        hold_action:
+          action: none
+    - type: weather-forecast
+      entity: weather.replace_me_home
+      show_forecast: false
+  - type: grid
+    cards:
+    - type: heading
+      heading: Home status
+      heading_style: title
+    - type: tile
+      entity: binary_sensor.replace_me_leak
+      name: Water leak
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+      icon: mdi:water-alert-outline
+    - type: tile
+      entity: binary_sensor.replace_me_front_door
+      name: Front door
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+      icon: mdi:door
+    - type: tile
+      entity: sensor.replace_me_kitchen_temperature
+      name: Kitchen temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: tile
+      entity: sensor.replace_me_kitchen_humidity
+      name: Kitchen humidity
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: button
+      name: Status & devices
+      icon: mdi:heart-pulse
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/status
+      hold_action:
+        action: none
+- title: Main
+  path: main
+  type: sections
+  max_columns: 1
+  dense_section_placement: false
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Explore
+      heading_style: title
+    - *id001
+    - type: button
+      name: Home
+      icon: mdi:home-outline
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/home
+      hold_action:
+        action: none
+  - type: grid
+    cards:
+    - type: heading
+      heading: Kitchen
+      heading_style: title
+    - type: button
+      name: Open Kitchen
+      icon: mdi:countertop-outline
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/kitchen
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_kitchen
+      name: Kitchen lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:countertop-outline
+    - type: tile
+      entity: sensor.replace_me_kitchen_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+  - type: grid
+    cards:
+    - type: heading
+      heading: Living room
+      heading_style: title
+    - type: button
+      name: Open Living room
+      icon: mdi:sofa-outline
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/living
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_living
+      name: Living room lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:sofa-outline
+    - type: tile
+      entity: sensor.replace_me_living_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+  - type: grid
+    cards:
+    - type: heading
+      heading: Dining room
+      heading_style: title
+    - type: button
+      name: Open Dining room
+      icon: mdi:table-chair
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/dining
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_dining
+      name: Dining room lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:table-chair
+    - type: tile
+      entity: sensor.replace_me_dining_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+- title: Kitchen
+  path: kitchen
+  type: sections
+  max_columns: 1
+  dense_section_placement: false
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Kitchen
+      heading_style: title
+    - type: button
+      name: Back to main
+      icon: mdi:arrow-left
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/main
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_kitchen
+      name: Lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:countertop-outline
+      features:
+      - type: light-brightness
+    - type: tile
+      entity: sensor.replace_me_kitchen_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: tile
+      entity: sensor.replace_me_kitchen_humidity
+      name: Humidity
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: media-control
+      entity: media_player.replace_me_kitchen
+  subview: true
+  back_path: /drift-mobile/main
+- title: Living room
+  path: living
+  type: sections
+  max_columns: 1
+  dense_section_placement: false
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Living room
+      heading_style: title
+    - type: button
+      name: Back to main
+      icon: mdi:arrow-left
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/main
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_living
+      name: Lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:sofa-outline
+      features:
+      - type: light-brightness
+    - type: tile
+      entity: sensor.replace_me_living_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: tile
+      entity: sensor.replace_me_living_humidity
+      name: Humidity
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+  subview: true
+  back_path: /drift-mobile/main
+- title: Dining room
+  path: dining
+  type: sections
+  max_columns: 1
+  dense_section_placement: false
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Dining room
+      heading_style: title
+    - type: button
+      name: Back to main
+      icon: mdi:arrow-left
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/main
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_dining
+      name: Lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:table-chair
+      features:
+      - type: light-brightness
+    - type: tile
+      entity: sensor.replace_me_dining_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: tile
+      entity: sensor.replace_me_dining_humidity
+      name: Humidity
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+  subview: true
+  back_path: /drift-mobile/main
+- title: Upstairs
+  path: upstairs
+  type: sections
+  max_columns: 1
+  dense_section_placement: false
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Explore
+      heading_style: title
+    - *id001
+    - type: button
+      name: Home
+      icon: mdi:home-outline
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/home
+      hold_action:
+        action: none
+  - type: grid
+    cards:
+    - type: heading
+      heading: Bedroom
+      heading_style: title
+    - type: button
+      name: Open Bedroom
+      icon: mdi:bed-outline
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/bedroom
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_bedroom
+      name: Bedroom lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:bed-outline
+    - type: tile
+      entity: sensor.replace_me_bedroom_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+  - type: grid
+    cards:
+    - type: heading
+      heading: Office
+      heading_style: title
+    - type: button
+      name: Open Office
+      icon: mdi:desk
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/office
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_office
+      name: Office lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:desk
+    - type: tile
+      entity: sensor.replace_me_office_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+  - type: grid
+    cards:
+    - type: heading
+      heading: Bathroom
+      heading_style: title
+    - type: button
+      name: Open Bathroom
+      icon: mdi:shower
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/bathroom
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_bathroom
+      name: Bathroom lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:shower
+    - type: tile
+      entity: sensor.replace_me_bathroom_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+- title: Bedroom
+  path: bedroom
+  type: sections
+  max_columns: 1
+  dense_section_placement: false
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Bedroom
+      heading_style: title
+    - type: button
+      name: Back to upstairs
+      icon: mdi:arrow-left
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/upstairs
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_bedroom
+      name: Lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:bed-outline
+      features:
+      - type: light-brightness
+    - type: tile
+      entity: sensor.replace_me_bedroom_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: tile
+      entity: sensor.replace_me_bedroom_humidity
+      name: Humidity
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+  subview: true
+  back_path: /drift-mobile/upstairs
+- title: Office
+  path: office
+  type: sections
+  max_columns: 1
+  dense_section_placement: false
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Office
+      heading_style: title
+    - type: button
+      name: Back to upstairs
+      icon: mdi:arrow-left
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/upstairs
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_office
+      name: Lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:desk
+      features:
+      - type: light-brightness
+    - type: tile
+      entity: sensor.replace_me_office_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: tile
+      entity: sensor.replace_me_office_humidity
+      name: Humidity
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+  subview: true
+  back_path: /drift-mobile/upstairs
+- title: Bathroom
+  path: bathroom
+  type: sections
+  max_columns: 1
+  dense_section_placement: false
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Bathroom
+      heading_style: title
+    - type: button
+      name: Back to upstairs
+      icon: mdi:arrow-left
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/upstairs
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_bathroom
+      name: Lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:shower
+      features:
+      - type: light-brightness
+    - type: tile
+      entity: sensor.replace_me_bathroom_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: tile
+      entity: sensor.replace_me_bathroom_humidity
+      name: Humidity
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+  subview: true
+  back_path: /drift-mobile/upstairs
+- title: Basement
+  path: basement
+  type: sections
+  max_columns: 1
+  dense_section_placement: false
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Explore
+      heading_style: title
+    - *id001
+    - type: button
+      name: Home
+      icon: mdi:home-outline
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/home
+      hold_action:
+        action: none
+  - type: grid
+    cards:
+    - type: heading
+      heading: Family room
+      heading_style: title
+    - type: button
+      name: Open Family room
+      icon: mdi:television
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/family
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_family
+      name: Family room lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:television
+    - type: tile
+      entity: sensor.replace_me_family_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+  - type: grid
+    cards:
+    - type: heading
+      heading: Laundry
+      heading_style: title
+    - type: button
+      name: Open Laundry
+      icon: mdi:washing-machine
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/laundry
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_laundry
+      name: Laundry lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:washing-machine
+    - type: tile
+      entity: sensor.replace_me_laundry_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+  - type: grid
+    cards:
+    - type: heading
+      heading: Utility
+      heading_style: title
+    - type: button
+      name: Open Utility
+      icon: mdi:water-pump
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/utility
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_utility
+      name: Utility lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:water-pump
+    - type: tile
+      entity: sensor.replace_me_utility_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+- title: Family room
+  path: family
+  type: sections
+  max_columns: 1
+  dense_section_placement: false
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Family room
+      heading_style: title
+    - type: button
+      name: Back to basement
+      icon: mdi:arrow-left
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/basement
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_family
+      name: Lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:television
+      features:
+      - type: light-brightness
+    - type: tile
+      entity: sensor.replace_me_family_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: tile
+      entity: sensor.replace_me_family_humidity
+      name: Humidity
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+  subview: true
+  back_path: /drift-mobile/basement
+- title: Laundry
+  path: laundry
+  type: sections
+  max_columns: 1
+  dense_section_placement: false
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Laundry
+      heading_style: title
+    - type: button
+      name: Back to basement
+      icon: mdi:arrow-left
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/basement
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_laundry
+      name: Lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:washing-machine
+      features:
+      - type: light-brightness
+    - type: tile
+      entity: sensor.replace_me_laundry_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: tile
+      entity: sensor.replace_me_laundry_humidity
+      name: Humidity
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+  subview: true
+  back_path: /drift-mobile/basement
+- title: Utility
+  path: utility
+  type: sections
+  max_columns: 1
+  dense_section_placement: false
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: Utility
+      heading_style: title
+    - type: button
+      name: Back to basement
+      icon: mdi:arrow-left
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/basement
+      hold_action:
+        action: none
+    - type: tile
+      entity: light.replace_me_utility
+      name: Lights
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: toggle
+      icon: mdi:water-pump
+      features:
+      - type: light-brightness
+    - type: tile
+      entity: sensor.replace_me_utility_temperature
+      name: Temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: tile
+      entity: sensor.replace_me_utility_humidity
+      name: Humidity
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: tile
+      entity: binary_sensor.replace_me_leak
+      name: Water leak
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+      icon: mdi:water-alert-outline
+  subview: true
+  back_path: /drift-mobile/basement
+- title: Status
+  path: status
+  type: sections
+  max_columns: 1
+  dense_section_placement: false
+  sections:
+  - type: grid
+    cards:
+    - type: heading
+      heading: System & sensors
+      heading_style: title
+    - type: button
+      name: Home
+      icon: mdi:home-outline
+      show_state: false
+      tap_action:
+        action: navigate
+        navigation_path: /drift-mobile/home
+      hold_action:
+        action: none
+    - type: tile
+      entity: binary_sensor.replace_me_leak
+      name: Water leak
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: tile
+      entity: binary_sensor.replace_me_front_door
+      name: Front door
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: tile
+      entity: sensor.replace_me_leak_battery
+      name: Leak sensor battery
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: tile
+      entity: sensor.replace_me_pi_cpu_temperature
+      name: Pi CPU temperature
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: tile
+      entity: sensor.replace_me_pi_storage_free
+      name: Pi storage free
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: tile
+      entity: update.replace_me_ha_core
+      name: Home Assistant update
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
+    - type: tile
+      entity: automation.replace_me_example
+      name: Automation status
+      tap_action:
+        action: more-info
+      icon_tap_action:
+        action: more-info
