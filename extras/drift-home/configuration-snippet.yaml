@@ -1,0 +1,18 @@
+# MERGE into /config/configuration.yaml. Do not duplicate existing top-level keys.
+# Keep all existing frontend and lovelace options/dashboard entries.
+frontend:
+  themes: !include_dir_merge_named themes
+lovelace:
+  dashboards:
+    drift-kitchen:
+      mode: yaml
+      title: Drift Kitchen
+      icon: mdi:tablet-dashboard
+      show_in_sidebar: true
+      filename: dashboards/drift-kitchen.yaml
+    drift-mobile:
+      mode: yaml
+      title: Drift Mobile
+      icon: mdi:cellphone
+      show_in_sidebar: true
+      filename: dashboards/drift-mobile.yaml

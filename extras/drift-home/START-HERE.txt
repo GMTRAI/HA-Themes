@@ -1,0 +1,177 @@
+DRIFT HOME
+Apple-inspired Home Assistant theme & dashboard package
+Prepared November 6, 2026 • Raspberry Pi 5 host / iPad and phone clients
+
+WHAT YOU GET
+• Drift Home: automatic light/dark palette, following the profile’s mode setting.
+• Drift Home Light and Drift Home Dark: explicit single-mode alternatives.
+• Kitchen dashboard: up to three section columns, reflowing on narrower displays.
+• Mobile dashboard: one section column, favorites first.
+• Each dashboard: Home, Upstairs, Main, Basement, Status, and nine room subviews.
+• Native light controls, climate, room temperature/humidity, weather, scenes,
+  leak/door status, kitchen media and device status. Optional camera/history cards.
+• No HACS, custom cards, JavaScript resources, cloud assets or paid dependencies.
+
+DESIGN
+Quiet neutral backgrounds, softly outlined 22-pixel cards, system typography and
+blue accents. State text remains visible; meaning is not communicated by color
+alone. Uses native Home Assistant controls and navigation. This is an independent
+Apple-inspired design, not an Apple product or a pixel-exact Apple Home clone.
+Some typography/shape theme variables are frontend implementation details and
+may change across releases. Core functionality does not depend on them.
+
+READ BEFORE INSTALLING
+These are complete dashboard templates, not a connection to your Home Assistant.
+No entities, devices, areas or room inventory were discovered. Every reference is
+explicitly named domain.replace_me_*. The nine rooms are editable examples:
+Main: Kitchen / Living room / Dining room
+Upstairs: Bedroom / Office / Bathroom
+Basement: Family room / Laundry / Utility
+Rename, duplicate or remove rooms to match your house. Nothing creates real lights,
+scenes, sensors or automations. Unmapped cards will show missing-entity errors.
+Target: current Home Assistant frontend with Sections, Heading and Tile cards.
+Documentation checked against the 2026.11 documentation; not tested on your Pi.
+
+1. PREPARE
+Make a Home Assistant backup and keep a copy of configuration.yaml. Use your
+existing file editor or file share to access the Home Assistant config directory.
+On Home Assistant OS this is normally /config; on other installations it is the
+folder containing configuration.yaml. Do not replace your entire configuration.
+
+2. MAP ENTITIES
+Open Developer Tools > States in Home Assistant. Copy the exact entity ID from
+there. Use ENTITY-WORKSHEET.csv as a checklist. A device ID is NOT an entity ID.
+Example: light.replace_me_kitchen becomes your actual light.some_existing_name.
+Use the same replacement everywhere in both dashboard files and any examples you
+choose to use. Keep domains compatible: light → light, climate → climate, etc.
+If your kitchen lights are switches, adapt the tile to the switch entity and remove
+brightness features; the optional mapper intentionally disallows domain changes.
+If you want one tile to control several lights, create a Light Group helper first
+and map the tile to that helper's actual entity ID.
+
+Required versus optional: only the cards you retain need entities. Remove the
+whole card for devices you do not own. No thermostat? Remove its tile. No humidity
+sensor? Remove that tile. Remove unused scene buttons from their grid's cards list.
+Delete an unused room's section and subview together. Keep floor navigation intact.
+
+All brightness sliders assume dimmable lights. Remove the features block for
+on/off-only lights. Climate opens the native more-info dialog, so no HVAC modes
+are assumed. Temperature units come from your entities; neither Celsius nor
+Fahrenheit is hard-coded. Weather is current conditions only, with no forecast
+capability assumption. The leak entity should have the moisture device class and
+the door entity the door class; confirm what on/off means in your integration.
+CPU temperature, free storage, battery, update and automation IDs must be mapped
+to existing entities or their cards removed. Do not create dummy healthy states.
+
+Optional bulk replacement on your Mac/PC (Python 3, no extra libraries):
+  a. Fill the values in entity-map.json with your real IDs; leave unused ones blank.
+  b. Open a terminal in this extracted package folder and run:
+       python3 personalize.py --output personalized
+  c. Inspect personalized/UNRESOLVED.txt and remove unused cards or finish mapping.
+  d. Install from personalized/, not from the original templates.
+The script does not contact Home Assistant and cannot verify that IDs exist.
+It leaves original files untouched, refuses an existing output folder and reports
+unresolved references. The map covers optional examples too; those need mapping
+only if used. Manual search/replace is equally valid.
+
+3. COPY FILES
+Copy themes/drift-home.yaml into /config/themes/drift-home.yaml.
+Copy both dashboards/*.yaml into /config/dashboards/ with the same filenames.
+Do not copy examples, the mapper or worksheet into configuration.yaml.
+
+4. REGISTER THEMES & DASHBOARDS
+Open configuration-snippet.yaml. MERGE its frontend and lovelace settings into
+your existing configuration.yaml, preserving existing keys/options and dashboards.
+There must be only one frontend: and one lovelace: at the top level. If you already
+load themes from a different directory, place this theme there and keep that
+existing include. Keep an existing lovelace mode/resources configuration as-is.
+The supplied snippet adds two named YAML dashboards and does not replace Overview.
+
+Validate configuration with Home Assistant's configuration check (Developer Tools
+> YAML when available). Resolve errors before restarting Home Assistant. Restart
+after the first registration, then open Drift Kitchen or Drift Mobile in the sidebar.
+For later theme edits, run frontend.reload_themes in Developer Tools > Actions.
+For dashboard YAML edits, reload the dashboard; use its Reload resources option
+if needed, then refresh the browser. These YAML dashboards are maintained in files.
+
+5. SELECT THE LOOK
+Open your user profile, select Drift Home, and choose Auto for the mode if you want
+it to follow system appearance. You can instead choose Light or Dark, or select the
+explicit Drift Home Light / Drift Home Dark theme. There is no timed theme automation
+in this package. Theme selection is profile-based; use a separate kitchen account
+if shared-device preferences should differ. Views deliberately omit theme overrides.
+
+6. OPEN ON YOUR DEVICES
+Append these routes to your existing Home Assistant address:
+  iPad kitchen: /drift-kitchen/home
+  Phone:        /drift-mobile/home
+Use the companion app or browser and set the desired dashboard as default using
+the client/profile dashboard controls available in your installation. There is no
+automatic device detection or redirect between the two dashboards.
+Native Sections wraps the kitchen layout as width decreases. Landscape iPad can
+show multiple columns; portrait and smaller windows may show fewer. Phone views
+remain one section wide, with native tiles usually two per row. For larger text,
+set a tile's grid_options to columns: 12, or adjust its Layout in a storage dashboard.
+Navigation remains visible through native view tabs and explicit floor buttons.
+This package does not hide the Home Assistant header/sidebar or change iPad sleep.
+No kiosk extension is required. Test with your preferred iPad text size and rotation.
+
+7. ADD YOUR OPTIONAL CARDS
+examples/dimmable-light.yaml: one card under a section's cards list.
+examples/room-section.yaml: one section under a view's sections list.
+examples/scene-button.yaml: one button that calls your existing scene, with confirmation.
+examples/camera.yaml: one still-preview camera card; opens more-info on tap.
+examples/temperature-history.yaml: one 12-hour history card, using recorder data.
+When pasting, add the YAML list dash and indent for the destination. Standalone
+example files are single objects, not whole dashboards. They have no hidden includes
+or custom templating requirement. Room section duplication is the reuse mechanism.
+For camera live view, change camera_view to live only after confirming support;
+keeping streams off the home page avoids continuous video decoding on the iPad.
+
+ALTERNATIVE: UI-MANAGED DASHBOARDS
+Instead of registering the dashboards under lovelace, create two new blank dashboards
+in Settings > Dashboards with URL paths drift-kitchen and drift-mobile. Open each
+Raw configuration editor and paste the corresponding full dashboard file. Do not
+also register a YAML dashboard with the same URL. Theme installation still requires
+frontend theme configuration. Later edits occur in the UI, not the source files.
+If you choose different dashboard URLs, replace ALL /drift-kitchen/ or /drift-mobile/
+navigation and back_path strings to match. Do not paste into the built-in dashboard.
+
+CHECK BEFORE DAILY USE
+[ ] No replace_me references remain in the dashboard files being installed.
+[ ] All retained entities exist and use the expected domain/capabilities.
+[ ] Both themes have readable text in menus, cards and more-info dialogs.
+[ ] Kitchen works in iPad landscape/portrait; phone scrolls without horizontal overflow.
+[ ] Floor buttons, every retained room and back navigation work in both dashboards.
+[ ] Light icon tap toggles; card tap opens more-info; dimming controls the right light.
+[ ] Scene confirmation appears and the intended existing scene runs.
+[ ] Leak/door states and sensor units match Developer Tools > States.
+[ ] Unavailable sensors remain visibly unavailable, rather than being treated as safe.
+[ ] Optional camera, climate and media cards work with the actual integrations.
+
+TROUBLESHOOTING / ROLLBACK
+Missing entity: finish mapping, check spelling, or remove the card.
+Missing card type: check your installed Home Assistant version supports native
+Sections/Heading/Tile; this package does not install or upgrade Home Assistant.
+No theme: check the include path, reload themes and refresh the client.
+Unexpected dark/light appearance: check profile mode and any existing view overrides.
+Navigation 404: restore the supplied URL slugs or update all navigation/back paths.
+No brightness: the light may not support dimming; remove its features block.
+Slow dashboard: remove optional history/camera cards first; no heavy assets are used.
+To uninstall: choose the default theme, remove ONLY the two Drift dashboard entries
+from configuration, validate/restart, then remove the copied Drift files. Retain
+existing theme includes if other themes use them. Restore your backup if necessary.
+
+VERIFICATION SCOPE
+All supplied YAML parsed locally; navigation paths and entity placeholder coverage
+were checked. This is not a Home Assistant runtime or physical-device test. Native
+responsive behavior, exact spacing, integrations and actions need the above checks
+on your actual installation. No live device changes were made.
+
+OFFICIAL REFERENCES
+Themes and modes: https://www.home-assistant.io/integrations/frontend/
+Sections: https://www.home-assistant.io/dashboards/sections/
+YAML dashboards: https://www.home-assistant.io/dashboards/dashboards/
+Tile cards: https://www.home-assistant.io/dashboards/tile/
+Card features: https://www.home-assistant.io/dashboards/features/
+Actions/navigation: https://www.home-assistant.io/dashboards/actions/
