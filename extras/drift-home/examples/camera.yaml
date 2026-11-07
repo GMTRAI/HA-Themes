@@ -1,0 +1,8 @@
+# Optional camera card; use auto for a still preview. No camera is loaded on the home page.
+type: picture-entity
+entity: camera.replace_me_entrance
+name: Entrance
+camera_view: auto
+show_state: false
+tap_action:
+  action: more-info

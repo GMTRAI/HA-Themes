@@ -1,0 +1,11 @@
+# Paste as one card. Remove features for lights without brightness support.
+type: tile
+entity: light.replace_me_room
+name: Room light
+tap_action:
+  action: more-info
+icon_tap_action:
+  action: toggle
+icon: mdi:lightbulb-outline
+features:
+- type: light-brightness

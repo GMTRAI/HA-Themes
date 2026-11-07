@@ -1,0 +1,27 @@
+# Paste as one item under a sections view’s sections list.
+type: grid
+cards:
+- type: heading
+  heading: Your room
+  heading_style: title
+- type: tile
+  entity: light.replace_me_room
+  name: Lights
+  tap_action:
+    action: more-info
+  icon_tap_action:
+    action: toggle
+- type: tile
+  entity: sensor.replace_me_room_temperature
+  name: Temperature
+  tap_action:
+    action: more-info
+  icon_tap_action:
+    action: more-info
+- type: tile
+  entity: sensor.replace_me_room_humidity
+  name: Humidity
+  tap_action:
+    action: more-info
+  icon_tap_action:
+    action: more-info

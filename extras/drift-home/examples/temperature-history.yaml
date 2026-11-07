@@ -1,0 +1,6 @@
+# Requires recorder history for the mapped sensor.
+type: history-graph
+title: Room comfort · 12 hours
+hours_to_show: 12
+entities:
+- sensor.replace_me_room_temperature

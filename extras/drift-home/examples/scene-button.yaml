@@ -1,0 +1,13 @@
+# Uses an EXISTING scene; this does not create it.
+type: button
+name: Evening
+icon: mdi:weather-sunset
+tap_action:
+  action: perform-action
+  perform_action: scene.turn_on
+  target:
+    entity_id: scene.replace_me_evening
+  confirmation:
+    text: Activate Evening?
+hold_action:
+  action: none
